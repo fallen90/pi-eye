@@ -5,9 +5,9 @@
 	<meta name="viewport" content="initial-scale=1" />
 	<title>Video Streaming - Raspberry Pi</title>
 	<style>
-		#video-container canvas{
-			border:5px solid #111;
-		}
+	#video-container canvas {
+		border: 5px solid #111;
+	}
 	</style>
 </head>
 
@@ -18,11 +18,10 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 	// MODIFY THIS TO THE APPROPRIATE URL IF IT IS NOT BEING RUN LOCALLY
-	var socket = io();
-
-	var canvas = document.getElementById('canvas-video');
-	var context = canvas.getContext('2d');
-	var img = new Image();
+	var socket = io.connect('http://0.0.0.0:9090'),
+		canvas = document.getElementById('canvas-video'),
+		context = canvas.getContext('2d'),
+		img = new Image();
 
 	// show loading notice
 	context.font = "50px Georgia";

@@ -1,9 +1,22 @@
 {
-  "dependencies": {
-    "express": "^4.16.1",
-    "mkdirp": "^0.5.1",
-    "moment": "^2.18.1",
-    "opencv": "^6.0.0",
-    "socket.io": "^2.0.3"
-  }
+	"name": "pi-eye",
+	"version": "0.0.1",
+	"author": "Jasper John Cinatad <slytherin9090@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"start:server": "node server/index.js",
+		"debug:server": "DEBUG=socket.io* node server/index.js",
+		"start:monitor": "node monitor/index.js",
+		"create:release": "npm version patch"
+	},
+	"dependencies": {
+		"express": "^4.16.1",
+		"mkdirp": "^0.5.1",
+		"moment": "^2.18.1",
+		"opencv": "^6.0.0",
+		"socket.io": "^2.0.3",
+		"socket.io-client": "^2.0.3",
+		"winston": "^2.4.0",
+		"winston-papertrail": "^1.0.5"
+	}
 }
