@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="initial-scale=1" />
+	<title>Video Streaming - Raspberry Pi</title>
+	<style>
+		#video-container canvas{
+			border:5px solid #111;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container center" id="video-container">
+		<canvas id="canvas-video" width="640" height="480"></canvas>
+	</div>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	// MODIFY THIS TO THE APPROPRIATE URL IF IT IS NOT BEING RUN LOCALLY
+	var socket = io();
+
+	var canvas = document.getElementById('canvas-video');
+	var context = canvas.getContext('2d');
+	var img = new Image();
+
+	// show loading notice
+	context.font = "50px Georgia";
+	context.fillStyle = '#111';
+	context.fillText('Waiting Video Data...', 100, 230);
+
+	socket.on('frame', function(data) {
+		// Reference: http://stackoverflow.com/questions/24107378/socket-io-began-to-support-binary-stream-from-1-0-is-there-a-complete-example-e/24124966#24124966
+		// var uint8Arr = new Uint8Array(data.buffer);
+		// var str = String.fromCharCode.apply(null, uint8Arr);
+		var base64String = data.buffer; //btoa(str);
+
+		img.onload = function() {
+			context.drawImage(this, 0, 0, canvas.width, canvas.height);
+			let pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+
+			var d = pixels.data;
+			for (var i = 0; i < d.length; i += 4) {
+				d[i] += 100;
+				d[i + 1] += 100;
+				d[i + 2] += 100;
+			}
+
+			pixels.data = d;
+
+			context.putImageData(pixels, 0, 0);
+		};
+		img.src = 'data:image/png;base64,' + base64String;
+	});
+	</script>
+</body>
+
+</html>
