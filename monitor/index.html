@@ -15,7 +15,7 @@
 	<div class="container center" id="video-container">
 		<canvas id="canvas-video" width="640" height="480"></canvas>
 	</div>
-	<script src="/socket.io/socket.io.js"></script>
+	<script src="/socket.io"></script>
 	<script>
 	// MODIFY THIS TO THE APPROPRIATE URL IF IT IS NOT BEING RUN LOCALLY
 	var socket = io.connect('http://0.0.0.0:9090'),
@@ -50,6 +50,10 @@
 			context.putImageData(pixels, 0, 0);
 		};
 		img.src = 'data:image/png;base64,' + base64String;
+	});
+
+	socket.on('announce', data => {
+		console.log('feed-list', data);
 	});
 	</script>
 </body>
